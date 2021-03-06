@@ -18,10 +18,50 @@ public class QuizAppController {
 		return quizzes;
 	}
 	
-	//　クイズ作成
+	// クイズ作成
 	@PostMapping("/create")
-	public void create(@RequestParam String question, @RequestParam boolean answer) {
+	public void create(@RequestParam String question, @RequestParam int answer) {
 		Quiz quiz = new Quiz(question, answer);
 		quizzes.add(quiz);
+	}
+	
+	// クイズの解答
+	@GetMapping("/check")
+	public String check(@ RequestParam String question,@RequestParam boolean answer) {
+		for(Quiz quiz: quizzes) {
+			if(quiz.getQuestion().equals(question)) {
+				if(quiz.isAnswer() == answer) {
+					return "正解！";
+				}else {
+					return "不正解！";
+				}
+			}else {
+				return "見つからなかった" + quiz.getQuestion();
+			}
+		}
+		return "問題がありません";
+	}
+	
+	// クイズの解答
+//	@GetMapping("/check")
+//	public String for_check(@ RequestParam String question,@RequestParam int answer) {
+//		for(Quiz quiz: quizzes) {
+//			if(quiz.getQuestion().equals(question)) {
+//				if(quiz.isFourAnswer() == answer) {
+//					return "正解！";
+//				}else {
+//					return "不正解！";
+//				}
+//			}else {
+//				return "見つからなかった" + quiz.getQuestion();
+//			}
+//		}
+//		return "問題がありません";
+//	}
+	
+	@Override
+	public String toString() {
+		String marubatsu = answer ? "○" : "×";
+		return question + "" + marubatsu;
 	}
 }
