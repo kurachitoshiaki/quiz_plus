@@ -58,10 +58,5 @@ public class QuizAppController {
 //		}
 //		return "問題がありません";
 //	}
-	
-	@Override
-	public String toString() {
-		String marubatsu = answer ? "○" : "×";
-		return question + "" + marubatsu;
-	}
+
 }
