@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,5 +59,15 @@ public class QuizAppController {
 //		}
 //		return "問題がありません";
 //	}
+	
+	@PostMapping("/save")
+	public String save() {
+		try {
+			QuizFileDao.write(quizzes);
+			return "ファイルに保存しました";
+		} catch (IOException e) {
+			return "ファイルの保存に失敗しました。";
+		}
+	}
 
 }
