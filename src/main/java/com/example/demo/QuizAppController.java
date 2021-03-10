@@ -59,7 +59,6 @@ public class QuizAppController {
 //		}
 //		return "問題がありません";
 //	}
-	
 	@PostMapping("/save")
 	public String save() {
 		try {
