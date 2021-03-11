@@ -12,7 +12,7 @@ public class QuizFileDao{
 	
 	private static final String FILE_PATH = "quizzes.tex";
 	
-	public static void write(List<Quiz> quizzes) throws IOException {
+	public void write(List<Quiz> quizzes) throws IOException {
 		List<String> lines = new ArrayList<>();
 		
 		for(Quiz quiz: quizzes) {
@@ -20,5 +20,17 @@ public class QuizFileDao{
 		}
 		Path path = Paths.get(FILE_PATH);
 		Files.write(path, lines);
+	}
+	
+	public List<Quiz> read() throws IOException {
+		Path path = Paths.get(FILE_PATH);
+		List<String> lines = Files.readAllLines(path);
+		
+		List<Quiz> quizzes = new ArrayList<>();
+		for(String line: lines) {
+			quizzes.add(Quiz.fromString(line));
+		}
+		
+		return quizzes;
 	}
 }
