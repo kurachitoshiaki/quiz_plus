@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class QuizAppController {
 	private List<Quiz> quizzes = new ArrayList<>();
+	private QuizFileDao quizFileDao = new QuizFileDao();
 	
 	// クイズ一覧
 	@GetMapping("/show")
@@ -62,11 +63,21 @@ public class QuizAppController {
 	@PostMapping("/save")
 	public String save() {
 		try {
-			QuizFileDao.write(quizzes);
+			quizFileDao.write(quizzes);
 			return "ファイルに保存しました";
 		} catch (IOException e) {
 			return "ファイルの保存に失敗しました。";
 		}
 	}
-
+	
+	@GetMapping("/load")
+	public String load() {
+		try {
+			quizzes = quizFileDao.read();
+			return "ファイルを読み込みました";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "ファイルの読み込みに失敗しました";
+		}
+	}
 }
